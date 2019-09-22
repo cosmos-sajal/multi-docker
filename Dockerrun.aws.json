@@ -1,0 +1,35 @@
+{
+	"AWSEBDockerrunVersion": 2,
+	"containerDefinitions": [
+		{
+			"name": "client",
+			"image": "cosmos91/multi-client",
+			"hostname": "client",
+			"essential": false
+		},
+		{
+			"name": "server",
+			"image": "cosmos91/multi-server",
+			"hostname": "api",
+			"essential": false	
+		},
+		{
+			"name": "worker",
+			"image": "cosmos91/multi-worker",
+			"hostname": "worker",
+			"essential": false	
+		},
+		{
+			"name": "nginx",
+			"image": "cosmos91/multi-nginx",
+			"essential": true,
+			"portMappings": [
+				{
+					"hostPort": 80,
+					"containerPort": 80
+				}
+			],
+			"links": ["client", "server"]
+		}
+	]
+}
