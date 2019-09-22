@@ -16,7 +16,7 @@ after_success:
   - docker build -t cosmos91/multi-nginx ./nginx
   - docker build -t cosmos91/multi-server ./server
   - docker build -t cosmos91/multi-worker ./worker
-  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push cosmos91/multi-client
   - docker push cosmos91/multi-nginx
   - docker push cosmos91/multi-server
