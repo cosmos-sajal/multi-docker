@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t cosmos91/react-test -f ./client/Docekfile.dev ./client
+
+script:
+  - docker run cosmos91/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t cosmos91/multi-client ./client
+  - docker build -t cosmos91/multi-nginx ./nginx
+  - docker build -t cosmos91/multi-server ./server
+  - docker build -t cosmos91/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --pasword-stdin
+  - docker push cosmos91/multi-client
+  - docker push cosmos91/multi-nginx
+  - docker push cosmos91/multi-server
+  - docker push cosmos91/multi-worker
